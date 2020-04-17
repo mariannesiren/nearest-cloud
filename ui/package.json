@@ -2,8 +2,7 @@
   "name": "nearest-cloud-ui",
   "scripts": {
     "start": "webpack-dev-server --hot --open",
-    "build": "webpack --config webpack.config.js --mode production",
-    "start-api": "cd .. && cd api && venv/bin/flask run --no-debugger"
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "version": "1.0.0",
   "main": "index.js",
