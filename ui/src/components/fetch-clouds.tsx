@@ -44,7 +44,6 @@ const FetchClouds = () => {
     fetchClouds();
   }, []);
 
-  console.log(loadingState);
   return (
     <Container>
       <ShowState loadingState={loadingState} />
@@ -59,11 +58,51 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
     case 'FETCHING':
       return <SyncLoader />;
     case 'LOADED':
-      console.log('data: ', loadingState.data.clouds);
-      return <Clouds clouds={loadingState.data.clouds} />;
+      const cloudDescriptions = loadingState.data.clouds.map(
+        (cloud) => cloud.cloud_description
+      );
+      return (
+        <Clouds
+          clouds={loadingState.data.clouds}
+          cloudProviders={parseCloudProviders(cloudDescriptions)}
+          cloudRegions={parseCloudRegions(cloudDescriptions)}
+        />
+      );
     case 'ERROR':
       return <div>An error occured, contact support 🙁</div>;
   }
+};
+
+const parseCloudProviders = (cloudDescriptions: string[]) => {
+  var cloudProviders: string[];
+  cloudProviders = [];
+
+  for (let i = 0; i < cloudDescriptions.length; i++) {
+    let provider = cloudDescriptions[i].substring(
+      cloudDescriptions[i].indexOf('-') + 2,
+      cloudDescriptions[i].indexOf(':')
+    );
+    if (cloudProviders.indexOf(provider) === -1) {
+      cloudProviders.push(provider);
+    }
+  }
+  return cloudProviders;
+};
+
+const parseCloudRegions = (cloudDescriptions: string[]) => {
+  var cloudRegions: string[];
+  cloudRegions = [];
+
+  for (let i = 0; i < cloudDescriptions.length; i++) {
+    let provider = cloudDescriptions[i].substring(
+      0,
+      cloudDescriptions[i].indexOf('-') - 1
+    );
+    if (cloudRegions.indexOf(provider) === -1) {
+      cloudRegions.push(provider);
+    }
+  }
+  return cloudRegions;
 };
 
 export default FetchClouds;
