@@ -74,7 +74,7 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
 };
 
 const parseCloudProviders = (cloudDescriptions: string[]) => {
-  var cloudProviders: string[];
+  let cloudProviders: string[];
   cloudProviders = [];
 
   for (let i = 0; i < cloudDescriptions.length; i++) {
