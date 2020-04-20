@@ -73,7 +73,7 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
   }
 };
 
-const parseCloudProviders = (cloudDescriptions: string[]) => {
+export const parseCloudProviders = (cloudDescriptions: string[]) => {
   let cloudProviders: string[];
   cloudProviders = [];
 
@@ -89,7 +89,7 @@ const parseCloudProviders = (cloudDescriptions: string[]) => {
   return cloudProviders;
 };
 
-const parseCloudRegions = (cloudDescriptions: string[]) => {
+export const parseCloudRegions = (cloudDescriptions: string[]) => {
   var cloudRegions: string[];
   cloudRegions = [];
 
