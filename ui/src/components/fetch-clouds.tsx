@@ -1,5 +1,5 @@
 import React from 'react';
-import Clouds from './clouds';
+import FilterClouds from './filter-clouds';
 import { Cloud } from '../types';
 import SyncLoader from 'react-spinners/SyncLoader';
 import styled from 'styled-components';
@@ -62,7 +62,7 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
         (cloud) => cloud.cloud_description
       );
       return (
-        <Clouds
+        <FilterClouds
           clouds={loadingState.data.clouds}
           cloudProviders={parseCloudProviders(cloudDescriptions)}
           cloudRegions={parseCloudRegions(cloudDescriptions)}
