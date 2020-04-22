@@ -3,6 +3,7 @@ import { Cloud } from '../types';
 import styled from 'styled-components';
 import Collection from './collection';
 import ShowClouds from './show-clouds';
+import SortButton from './sort-button';
 import { locateUser } from '../utils/locate-user';
 import { calculateDistance } from '../utils/calculate-distance';
 
@@ -25,15 +26,6 @@ const CloudSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-`;
-
-const SortButton = styled.div`
-  background: #ff7343;
-  padding: 0.5rem;
-  margin: 1rem auto auto auto;
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
 `;
 
 const FilterClouds = ({
@@ -204,10 +196,7 @@ const FilterClouds = ({
           />
         </Row>
       </FilterSection>
-      <SortButton onClick={handleLocationClick}>
-        Sort clouds by distance from your location
-      </SortButton>
-      <div id="locationInformation"></div>
+      <SortButton handleClick={handleLocationClick} />
       <CloudSection>
         <Row>
           <ShowClouds heading="Clouds:" clouds={clouds} />
