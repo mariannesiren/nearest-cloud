@@ -102,29 +102,31 @@ const FilterClouds = ({
   };
 
   const filterClouds = () => {
-    if (selectedProviders.length === 0 && selectedRegions.length === 0) {
+    const hasSelectedProvider = selectedProviders.length !== 0;
+    const hasSelectedRegion = selectedRegions.length !== 0;
+
+    if (!hasSelectedProvider && !hasSelectedRegion) {
       return;
     }
 
-    let cloudsToDisplay: Cloud[];
-    cloudsToDisplay = [];
+    let cloudsToDisplay: Cloud[] = [];
 
     initialClouds.forEach((cloud) => {
-      if (selectedProviders.length !== 0 && selectedRegions.length === 0) {
+      if (hasSelectedProvider && !hasSelectedRegion) {
         selectedProviders.forEach((provider) => {
           if (cloud.cloud_description.includes(provider)) {
             cloudsToDisplay.push(cloud);
           }
         });
       }
-      if (selectedRegions.length !== 0 && selectedProviders.length === 0) {
+      if (!hasSelectedProvider && hasSelectedRegion) {
         selectedRegions.forEach((region) => {
           if (cloud.cloud_description.includes(region)) {
             cloudsToDisplay.push(cloud);
           }
         });
       }
-      if (selectedRegions.length !== 0 && selectedProviders.length !== 0) {
+      if (hasSelectedProvider && hasSelectedRegion) {
         selectedRegions.forEach((region) => {
           selectedProviders.forEach((provider) => {
             if (
