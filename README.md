@@ -1,23 +1,23 @@
-# Nearest cloud
+# Aiven Nearest cloud project
 
-To run this project you will need
+To run this project you will need:
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/)
 - [Python 3](https://www.python.org/)
-- [Just](https://github.com/casey/just)
 
 Steps to get project running:
 
 1. Clone repo
-2. Navigate to root folder
-3. Ensure you have Just installed by running `just --version`
-4. Run `just setup-ui` and `just setup-api`
-5. Run `just start-api`, open another window and run `just start-ui`
+2. Navigate to project root folder
+3. Setup backend with this commans:
+   `cd api/ && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt`
+4. Start backend with `flask run --no-debugger`
+5. Open new terminal window and locate to project root folder (you probably are in root/api -folder) with `cd ..`
+6. Setup frontend with `cd ui/ && yarn install`
+7. Start ui with `yarn start`
 
-(If you don't want to use Just, you can enter commands defined in the Justfile manually too)
+To run tests, run in project root:
 
-To run tests, run:
-
-- `just test-ui`
-- `just test-api`
+- `cd ui/ npx jest`
+- `cp api/ source venv/bin/activate && nosetests --verbosity=2 test_api`
