@@ -3,7 +3,8 @@ import { Cloud } from '../types';
 import styled from 'styled-components';
 import Collection from './collection';
 import ShowClouds from './show-clouds';
-import { locateUser } from './locate-user';
+import { locateUser } from '../utils/locate-user';
+import { calculateDistance } from '../utils/calculate-distance';
 
 const Container = styled.div`
   display: flex;
@@ -150,13 +151,13 @@ const FilterClouds = ({
         latitude: b.geo_latitude,
         longitude: b.geo_longitude,
       };
-      const aDistance = distance(
+      const aDistance = calculateDistance(
         location.latitude,
         location.longitude,
         aCloudLocation.latitude,
         aCloudLocation.longitude
       );
-      const bDistance = distance(
+      const bDistance = calculateDistance(
         location.latitude,
         location.longitude,
         bCloudLocation.latitude,
@@ -207,35 +208,6 @@ const FilterClouds = ({
       </CloudSection>
     </Container>
   );
-};
-
-// Distance and toRad functions are copy pasted from here:
-// https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates/18883819#18883819
-const distance = (
-  userLat: number,
-  userLong: number,
-  cloudLat: number,
-  cloudLong: number
-) => {
-  const R = 6371; // km
-  const distanceLatRad = toRad(cloudLat - userLat);
-  const distanceLonRad = toRad(cloudLong - userLong);
-  const userLatRad = toRad(userLat);
-  const cloudLatRad = toRad(cloudLat);
-
-  const a =
-    Math.sin(distanceLatRad / 2) * Math.sin(distanceLatRad / 2) +
-    Math.sin(distanceLonRad / 2) *
-      Math.sin(distanceLonRad / 2) *
-      Math.cos(userLatRad) *
-      Math.cos(cloudLatRad);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
-  return distance;
-};
-
-const toRad = (value: number) => {
-  return (value * Math.PI) / 180;
 };
 
 export default FilterClouds;
