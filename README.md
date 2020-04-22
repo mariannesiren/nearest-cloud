@@ -19,5 +19,5 @@ Steps to get project running:
 
 To run tests, run in project root:
 
-- `cd ui/ npx jest`
-- `cp api/ source venv/bin/activate && nosetests --verbosity=2 test_api`
+- `cd ui/ && npx jest`
+- `cp api/ && source venv/bin/activate && nosetests --verbosity=2 test_api`
