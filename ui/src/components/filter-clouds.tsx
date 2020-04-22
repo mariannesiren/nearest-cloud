@@ -66,7 +66,7 @@ const FilterClouds = ({
     const value = event.currentTarget.innerText;
 
     if (selectedRegions.includes(value)) {
-      let newState = selectedRegions.filter((region) => region !== value);
+      const newState = selectedRegions.filter((region) => region !== value);
       setSelectedRegions([...newState]);
     } else {
       setSelectedRegions([...selectedRegions, value]);
@@ -77,7 +77,9 @@ const FilterClouds = ({
     const value = event.currentTarget.innerText;
 
     if (selectedProviders.includes(value)) {
-      let newState = selectedProviders.filter((provider) => provider !== value);
+      const newState = selectedProviders.filter(
+        (provider) => provider !== value
+      );
       setSelectedProviders([...newState]);
     } else {
       setSelectedProviders([...selectedProviders, value]);
@@ -101,7 +103,7 @@ const FilterClouds = ({
       return setClouds(initialClouds);
     }
 
-    let cloudsToDisplay: Cloud[] = [];
+    const cloudsToDisplay: Cloud[] = [];
 
     initialClouds.forEach((cloud) => {
       if (hasSelectedProvider && !hasSelectedRegion) {

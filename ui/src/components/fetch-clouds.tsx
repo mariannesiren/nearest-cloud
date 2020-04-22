@@ -74,11 +74,10 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
 };
 
 export const parseCloudProviders = (cloudDescriptions: string[]) => {
-  let cloudProviders: string[];
-  cloudProviders = [];
+  const cloudProviders: string[] = [];
 
   for (let i = 0; i < cloudDescriptions.length; i++) {
-    let provider = cloudDescriptions[i].substring(
+    const provider = cloudDescriptions[i].substring(
       cloudDescriptions[i].indexOf('-') + 2,
       cloudDescriptions[i].indexOf(':')
     );
@@ -94,7 +93,7 @@ export const parseCloudRegions = (cloudDescriptions: string[]) => {
   cloudRegions = [];
 
   for (let i = 0; i < cloudDescriptions.length; i++) {
-    let provider = cloudDescriptions[i].substring(
+    const provider = cloudDescriptions[i].substring(
       0,
       cloudDescriptions[i].indexOf('-') - 1
     );
