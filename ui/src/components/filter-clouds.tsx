@@ -30,7 +30,7 @@ const CloudSection = styled.div`
 const SortButton = styled.div`
   background: #ff7343;
   padding: 0.5rem;
-  margin: 5px;
+  margin: 1rem auto auto auto;
   color: white;
   border-radius: 3px;
   cursor: pointer;
