@@ -102,6 +102,10 @@ const FilterClouds = ({
   };
 
   const filterClouds = () => {
+    if (selectedProviders.length === 0 && selectedRegions.length === 0) {
+      return;
+    }
+
     let cloudsToDisplay: Cloud[];
     cloudsToDisplay = [];
 
