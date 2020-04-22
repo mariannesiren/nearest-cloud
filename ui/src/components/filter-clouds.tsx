@@ -106,7 +106,7 @@ const FilterClouds = ({
     const hasSelectedRegion = selectedRegions.length !== 0;
 
     if (!hasSelectedProvider && !hasSelectedRegion) {
-      return;
+      return setClouds(initialClouds);
     }
 
     let cloudsToDisplay: Cloud[] = [];
