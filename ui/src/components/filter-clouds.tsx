@@ -27,7 +27,7 @@ const CloudSection = styled.div`
   justify-content: center;
 `;
 
-const OrderButton = styled.div`
+const SortButton = styled.div`
   background: #ff7343;
   padding: 0.5rem;
   margin: 5px;
@@ -202,9 +202,9 @@ const FilterClouds = ({
           />
         </Row>
       </FilterSection>
-      <OrderButton onClick={handleLocationClick}>
+      <SortButton onClick={handleLocationClick}>
         Sort clouds by distance from your location
-      </OrderButton>
+      </SortButton>
       <CloudSection>
         <Row>
           <ShowClouds heading="Clouds:" clouds={clouds} />
