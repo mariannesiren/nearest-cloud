@@ -207,6 +207,7 @@ const FilterClouds = ({
       <SortButton onClick={handleLocationClick}>
         Sort clouds by distance from your location
       </SortButton>
+      <div id="locationInformation"></div>
       <CloudSection>
         <Row>
           <ShowClouds heading="Clouds:" clouds={clouds} />
