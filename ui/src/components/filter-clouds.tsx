@@ -26,6 +26,15 @@ const CloudSection = styled.div`
   justify-content: center;
 `;
 
+const OrderButton = styled.div`
+  background: #ff7343;
+  padding: 0.5rem;
+  margin: 5px;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+
 const FilterClouds = ({
   initialClouds,
   cloudProviders,
@@ -51,6 +60,10 @@ const FilterClouds = ({
   React.useEffect(() => {
     setClouds(initialClouds);
   }, [initialClouds]);
+
+  React.useEffect(() => {
+    sortClouds();
+  }, [location]);
 
   React.useEffect(() => {
     filterClouds();
@@ -123,6 +136,46 @@ const FilterClouds = ({
     setClouds([...new Set(cloudsToDisplay)]);
   };
 
+  const sortClouds = () => {
+    if (Object.values(location).every((x) => x === null)) {
+      return;
+    }
+
+    const sortedClouds = clouds.sort((a, b) => {
+      const aCloudLocation = {
+        latitude: a.geo_latitude,
+        longitude: a.geo_longitude,
+      };
+      const bCloudLocation = {
+        latitude: b.geo_latitude,
+        longitude: b.geo_longitude,
+      };
+      const aDistance = distance(
+        location.latitude,
+        location.longitude,
+        aCloudLocation.latitude,
+        aCloudLocation.longitude
+      );
+      const bDistance = distance(
+        location.latitude,
+        location.longitude,
+        bCloudLocation.latitude,
+        bCloudLocation.longitude
+      );
+
+      if (aDistance < bDistance) {
+        return -1;
+      }
+
+      if (aDistance > bDistance) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    setClouds([...sortedClouds]);
+  };
 
   return (
     <Container>
@@ -154,6 +207,35 @@ const FilterClouds = ({
       </CloudSection>
     </Container>
   );
+};
+
+// Distance and toRad functions are copy pasted from here:
+// https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates/18883819#18883819
+const distance = (
+  userLat: number,
+  userLong: number,
+  cloudLat: number,
+  cloudLong: number
+) => {
+  const R = 6371; // km
+  const distanceLatRad = toRad(cloudLat - userLat);
+  const distanceLonRad = toRad(cloudLong - userLong);
+  const userLatRad = toRad(userLat);
+  const cloudLatRad = toRad(cloudLat);
+
+  const a =
+    Math.sin(distanceLatRad / 2) * Math.sin(distanceLatRad / 2) +
+    Math.sin(distanceLonRad / 2) *
+      Math.sin(distanceLonRad / 2) *
+      Math.cos(userLatRad) *
+      Math.cos(cloudLatRad);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+};
+
+const toRad = (value: number) => {
+  return (value * Math.PI) / 180;
 };
 
 export default FilterClouds;
