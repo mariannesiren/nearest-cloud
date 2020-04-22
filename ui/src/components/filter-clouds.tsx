@@ -26,11 +26,11 @@ const CloudSection = styled.div`
 `;
 
 const FilterClouds = ({
-  clouds,
+  initialClouds,
   cloudProviders,
   cloudRegions,
 }: {
-  clouds: Cloud[];
+  initialClouds: Cloud[];
   cloudProviders: string[];
   cloudRegions: string[];
 }) => {
@@ -38,7 +38,10 @@ const FilterClouds = ({
   const [selectedProviders, setSelectedProviders] = React.useState<string[]>(
     []
   );
-  const [filteredClouds, setFilteredClouds] = React.useState<Cloud[]>([]);
+  const [clouds, setClouds] = React.useState<Cloud[]>(initialClouds);
+  React.useEffect(() => {
+    setClouds(initialClouds);
+  }, [initialClouds]);
 
   React.useEffect(() => {
     filterClouds();
@@ -70,7 +73,7 @@ const FilterClouds = ({
     let cloudsToDisplay: Cloud[];
     cloudsToDisplay = [];
 
-    clouds.forEach((cloud) => {
+    initialClouds.forEach((cloud) => {
       if (selectedProviders.length !== 0 && selectedRegions.length === 0) {
         selectedProviders.forEach((provider) => {
           if (cloud.cloud_description.includes(provider)) {
@@ -99,13 +102,9 @@ const FilterClouds = ({
       }
     });
 
-    setFilteredClouds([...new Set(cloudsToDisplay)]);
+    setClouds([...new Set(cloudsToDisplay)]);
   };
 
-  const cloudsToShow =
-    selectedProviders.length === 0 && selectedRegions.length === 0
-      ? clouds
-      : filteredClouds;
 
   return (
     <Container>
@@ -129,7 +128,7 @@ const FilterClouds = ({
       </FilterSection>
       <CloudSection>
         <Row>
-          <ShowClouds heading="Clouds:" clouds={cloudsToShow} />
+          <ShowClouds heading="Clouds:" clouds={clouds} />
         </Row>
       </CloudSection>
     </Container>

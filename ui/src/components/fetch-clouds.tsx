@@ -63,7 +63,7 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
       );
       return (
         <FilterClouds
-          clouds={loadingState.data.clouds}
+          initialClouds={loadingState.data.clouds}
           cloudProviders={parseCloudProviders(cloudDescriptions)}
           cloudRegions={parseCloudRegions(cloudDescriptions)}
         />
