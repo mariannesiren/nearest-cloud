@@ -3,6 +3,7 @@ import { Cloud } from '../types';
 import styled from 'styled-components';
 import Collection from './collection';
 import ShowClouds from './show-clouds';
+import { locateUser } from './locate-user';
 
 const Container = styled.div`
   display: flex;
@@ -39,6 +40,14 @@ const FilterClouds = ({
     []
   );
   const [clouds, setClouds] = React.useState<Cloud[]>(initialClouds);
+  const [location, setLocation] = React.useState<{
+    latitude: number | null;
+    longitude: number | null;
+  }>({
+    latitude: null,
+    longitude: null,
+  });
+
   React.useEffect(() => {
     setClouds(initialClouds);
   }, [initialClouds]);
@@ -67,6 +76,15 @@ const FilterClouds = ({
     } else {
       setSelectedProviders([...selectedProviders, value]);
     }
+  };
+
+  const handleLocationClick = () => {
+    locateUser().then((result) => {
+      setLocation({
+        latitude: result.latitude,
+        longitude: result.longitude,
+      });
+    });
   };
 
   const filterClouds = () => {
@@ -126,6 +144,9 @@ const FilterClouds = ({
           />
         </Row>
       </FilterSection>
+      <OrderButton onClick={handleLocationClick}>
+        Sort clouds by distance from your location
+      </OrderButton>
       <CloudSection>
         <Row>
           <ShowClouds heading="Clouds:" clouds={clouds} />
