@@ -74,34 +74,21 @@ const ShowState = ({ loadingState }: { loadingState: LoadingState }) => {
 };
 
 export const parseCloudProviders = (cloudDescriptions: string[]) => {
-  const cloudProviders: string[] = [];
+  const parsedCloudProviders = cloudDescriptions.map((cloud) =>
+    // Get characters between "-" and ":"
+    cloud.substring(cloud.indexOf('-') + 2, cloud.indexOf(':'))
+  );
 
-  for (let i = 0; i < cloudDescriptions.length; i++) {
-    const provider = cloudDescriptions[i].substring(
-      cloudDescriptions[i].indexOf('-') + 2,
-      cloudDescriptions[i].indexOf(':')
-    );
-    if (cloudProviders.indexOf(provider) === -1) {
-      cloudProviders.push(provider);
-    }
-  }
-  return cloudProviders;
+  return [...new Set(parsedCloudProviders)];
 };
 
 export const parseCloudRegions = (cloudDescriptions: string[]) => {
-  var cloudRegions: string[];
-  cloudRegions = [];
+  const parsedCloudRegions = cloudDescriptions.map((cloud) =>
+    // Get characters before "-"
+    cloud.substring(0, cloud.indexOf('-') - 1)
+  );
 
-  for (let i = 0; i < cloudDescriptions.length; i++) {
-    const provider = cloudDescriptions[i].substring(
-      0,
-      cloudDescriptions[i].indexOf('-') - 1
-    );
-    if (cloudRegions.indexOf(provider) === -1) {
-      cloudRegions.push(provider);
-    }
-  }
-  return cloudRegions;
+  return [...new Set(parsedCloudRegions)];
 };
 
 export default FetchClouds;
