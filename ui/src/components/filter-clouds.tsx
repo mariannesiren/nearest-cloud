@@ -96,45 +96,25 @@ const FilterClouds = ({
   };
 
   const filterClouds = () => {
-    const hasSelectedProvider = selectedProviders.length !== 0;
-    const hasSelectedRegion = selectedRegions.length !== 0;
+    const filteredClouds = initialClouds
+      .filter((cloud) => {
+        if (selectedRegions.length === 0) return true;
+        return (
+          selectedRegions.find((region) => {
+            return cloud.cloud_description.includes(region);
+          }) !== undefined
+        );
+      })
+      .filter((cloud) => {
+        if (selectedProviders.length === 0) return true;
+        return (
+          selectedProviders.find((provider) => {
+            return cloud.cloud_description.includes(provider);
+          }) !== undefined
+        );
+      });
 
-    if (!hasSelectedProvider && !hasSelectedRegion) {
-      return setClouds(initialClouds);
-    }
-
-    const cloudsToDisplay: Cloud[] = [];
-
-    initialClouds.forEach((cloud) => {
-      if (hasSelectedProvider && !hasSelectedRegion) {
-        selectedProviders.forEach((provider) => {
-          if (cloud.cloud_description.includes(provider)) {
-            cloudsToDisplay.push(cloud);
-          }
-        });
-      }
-      if (!hasSelectedProvider && hasSelectedRegion) {
-        selectedRegions.forEach((region) => {
-          if (cloud.cloud_description.includes(region)) {
-            cloudsToDisplay.push(cloud);
-          }
-        });
-      }
-      if (hasSelectedProvider && hasSelectedRegion) {
-        selectedRegions.forEach((region) => {
-          selectedProviders.forEach((provider) => {
-            if (
-              cloud.cloud_description.includes(region) &&
-              cloud.cloud_description.includes(provider)
-            ) {
-              cloudsToDisplay.push(cloud);
-            }
-          });
-        });
-      }
-    });
-
-    setClouds([...new Set(cloudsToDisplay)]);
+    setClouds([...new Set(filteredClouds)]);
   };
 
   const sortClouds = () => {
